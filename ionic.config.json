@@ -1,0 +1,7 @@
+{
+  "name": "Spyral Music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
