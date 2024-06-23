@@ -9,7 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'splash',
-    loadComponent: () => import('./views/splashPage/splash.component').then(m=> m.SplashScreenComponent)
+    loadChildren: () => import('./views/splashPage/splash.module').then(m=> m.SplashScreenModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./views/login/login.module').then(m=>m.LoginPageModule)
   },
   {
     path: '',
