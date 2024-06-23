@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StorageService } from 'src/app/service/StorageService';
 
 
 @Component({
@@ -6,9 +8,18 @@ import { Component } from '@angular/core';
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit{
 
-  constructor() {}
+  constructor(private storageService: StorageService, private router: Router) {}
+  
+  async ngOnInit(): Promise<void> {
+    await this.storageService.init();
+  }
+
+  //Prop alert
+  showAlert: boolean = false;
+  alertMessage: string = '';
+  alertCode: number = 0;
 
   //Regex
   regexEmail: string = '[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}';
@@ -30,16 +41,33 @@ export class LoginPage {
     this.isValidPassword = new RegExp(this.regexPassword).test(newValue)
   }
 
+  private isShow: Boolean = false;
+
+  #showMessageBar = (message: string, code : 0 | 1 | 3 = 0) => {
+    if(this.isShow) return;
+    
+    this.isShow = true;
+    this.alertCode = code;
+    this.alertMessage = message;
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+      this.isShow = false;
+    }, 3000)
+  }
+
   onClick = () : void => {
     if(!this.isValidEmail || !this.isValidPassword) return;
 
     //Aqui se debe hacer el login y entrar al sistema
     console.log(`Email ${this.emailValue }`)
     console.log(`Password ${this.passwordValue}`)
+    //* Aqui se guarda el token del user
+    this.storageService.set('token', 'token');
   }
 
   onRedirect = () => {
-    console.log('Aqui sera redirigido')
+    this.router.navigate(['/register'])
   }
   
 

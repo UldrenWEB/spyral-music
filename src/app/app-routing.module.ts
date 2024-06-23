@@ -12,8 +12,16 @@ const routes: Routes = [
     loadChildren: () => import('./views/splashPage/splash.module').then(m=> m.SplashScreenModule)
   },
   {
+    path: 'startup',
+    loadChildren: () => import('./views/startup/startup.module').then(m=>m.StartupPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./views/login/login.module').then(m=>m.LoginPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./views/register/register.module').then(m=>m.RegisterPageModule)
   },
   {
     path: '',
