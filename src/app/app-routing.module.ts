@@ -4,6 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/splash',
+    pathMatch: 'full'
+  },
+  {
+    path: 'splash',
+    loadComponent: () => import('./views/splashPage/splash.component').then(m=> m.SplashScreenComponent)
+  },
+  {
+    path: '',
     loadChildren: () => import('./views/tabs/tabs.module').then(m => m.TabsPageModule)
   }
 ];

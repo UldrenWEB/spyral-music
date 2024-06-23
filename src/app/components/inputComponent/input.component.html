@@ -1,0 +1,4 @@
+<ion-item>
+    <ion-label [position]="labelPlacement">{{ label }}</ion-label>
+    <ion-input [counter]="counter" [maxlength]="maxlength" [(ngModel)]="value" (ionChange)="onChange($event)"></ion-input>
+</ion-item>

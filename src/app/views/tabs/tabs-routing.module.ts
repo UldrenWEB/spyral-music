@@ -13,7 +13,8 @@ const routes: Routes = [
       },
       {
         path: 'search',
-        loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
+        loadChildren: () => import('../../views/splashPage/splash.module').then(m => m.SplashScreenModule)
+        // loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
       },
       {
         path: 'categories',

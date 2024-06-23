@@ -1,0 +1,19 @@
+ion-item {
+    --border-color: #ccc;
+    --border-style: solid;
+    --border-width: 1px;
+    --border-radius: 8px;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --padding-top: 4px;
+    --padding-bottom: 4px;
+  }
+  
+  ion-label {
+    --color: #333;
+  }
+  
+  ion-input {
+    --placeholder-color: #888;
+    --color: #000;
+  }
