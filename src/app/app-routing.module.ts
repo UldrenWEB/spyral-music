@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./views/register/register.module').then(m=>m.RegisterPageModule)
   },
   {
+    path: 'create-artist',
+    loadChildren: () => import('./views/artist-page/artist.module').then(m=>m.ArtistPageModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./views/tabs/tabs.module').then(m => m.TabsPageModule)
   }
