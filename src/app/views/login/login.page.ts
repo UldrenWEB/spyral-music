@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/AuthServices';
 import { StorageService } from 'src/app/service/StorageService';
 
 
@@ -10,7 +11,7 @@ import { StorageService } from 'src/app/service/StorageService';
 })
 export class LoginPage implements OnInit{
 
-  constructor(private storageService: StorageService, private router: Router) {}
+  constructor(private storageService: StorageService, private router: Router, private authService: AuthService) {}
   
   async ngOnInit(): Promise<void> {
     await this.storageService.init();
@@ -62,8 +63,11 @@ export class LoginPage implements OnInit{
     //Aqui se debe hacer el login y entrar al sistema
     console.log(`Email ${this.emailValue }`)
     console.log(`Password ${this.passwordValue}`)
-    //* Aqui se guarda el token del user
+
+    //* Aqui se guarda el token del user y el rol del usuario
     this.storageService.set('token', 'token');
+    this.authService.setUserRole(1);
+    this.router.navigate(['/tabs'])
   }
 
   onRedirect = () => {

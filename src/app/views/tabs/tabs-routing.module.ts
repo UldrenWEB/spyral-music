@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('../categories/categories.module').then(m => m.CategoriesPageModule)
       },
       {
+        path: 'upload',
+        loadChildren: () => import('../upload/upload.module').then(m=>m.UploadPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
