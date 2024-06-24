@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Keyboard } from "@capacitor/keyboard";
+import { Platform } from "@ionic/angular";
 import { DataService } from "src/app/service/DataService";
 
 @Component({
@@ -7,9 +9,40 @@ import { DataService } from "src/app/service/DataService";
     templateUrl: 'register.page.html',
     styleUrls: ['register.page.scss']
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit{
 
-    constructor(private router: Router, private dataService: DataService){}
+    constructor(private router: Router, private dataService: DataService, private platform: Platform){}
+    
+    ngOnInit(): void {
+        this.setupKeyboardListener();
+    }
+
+    setupKeyboardListener() {
+        if (this.platform.is('capacitor')) {
+          Keyboard.addListener('keyboardWillShow', (info) => {
+            // Asegura que el elemento exista y sea del tipo HTMLElement antes de modificar su estilo
+            const containerInput = document.querySelector('.container-input');
+            if (containerInput instanceof HTMLElement) {
+              // Opción 1: Usar scrollIntoView para asegurar que el input sea visible
+              // Esto hará que el navegador desplace el contenedor para que el input sea visible
+              // Nota: Considera la necesidad de un enfoque más específico si tienes múltiples inputs
+              containerInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      
+              // Opción 2: Ajustar el padding-bottom basado en la altura del teclado
+              // Esto puede ser útil si tienes un control más fino sobre el comportamiento de desplazamiento
+              containerInput.style.paddingBottom = `${info.keyboardHeight}px`;
+            }
+          });
+      
+          Keyboard.addListener('keyboardWillHide', () => {
+            const containerInput = document.querySelector('.container-input');
+            if (containerInput instanceof HTMLElement) {
+              // Restablecer el padding-bottom cuando el teclado se oculte
+              containerInput.style.paddingBottom = '0';
+            }
+          });
+        }
+      }
 
     usernameValue: string = '';
     passwordValue: string = '';

@@ -4,6 +4,7 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .container-logo{
@@ -61,3 +62,16 @@
     text-decoration: underline;
     font-weight: bold;
 }
+
+.container-input{
+    padding: 0em 1em;
+    overflow: scroll;
+}
+
+.custom-ion-content {
+    height: 14em;
+}
+
+ion-content {
+    --background: black;
+  }

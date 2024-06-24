@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
+import { Platform } from '@ionic/angular';
 import { AuthService } from 'src/app/service/AuthServices';
 import { StorageService } from 'src/app/service/StorageService';
 
@@ -11,10 +13,29 @@ import { StorageService } from 'src/app/service/StorageService';
 })
 export class LoginPage implements OnInit{
 
-  constructor(private storageService: StorageService, private router: Router, private authService: AuthService) {}
+  constructor(private storageService: StorageService, private router: Router, private authService: AuthService, private platform: Platform) {}
   
   async ngOnInit(): Promise<void> {
     await this.storageService.init();
+    this.setupKeyboardListener();
+  }
+
+  setupKeyboardListener() {
+    if (this.platform.is('capacitor')) {
+      Keyboard.addListener('keyboardWillShow', (info) => {
+        const containerInput = document.querySelector('.container-input');
+        if (containerInput instanceof HTMLElement) {
+          containerInput.style.paddingBottom = `${info.keyboardHeight}px`;
+        }
+      });
+
+      Keyboard.addListener('keyboardWillHide', () => {
+        const containerInput = document.querySelector('.container-input');
+        if (containerInput instanceof HTMLElement) {
+          containerInput.style.paddingBottom = '0';
+        }
+      });
+    }
   }
 
   //Prop alert

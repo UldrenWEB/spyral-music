@@ -1,9 +1,10 @@
 @import '../../../theme/variables.scss';
 
 .container{
-    height: 100vh;
+    height: 100%;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .cont-logo{
@@ -44,8 +45,12 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    margin-top: 1.5em;
     margin-left: 2em;
+}
+.container-input{
+    padding: 0em 1em;
+    overflow: scroll;
+    // padding-bottom: 30em;
 }
 
 .cont-btn{
@@ -82,10 +87,18 @@
     text-decoration: underline;
 }
 
+.custom-ion-content {
+    height: 22em;
+  }
+
 ion-checkbox {
     --size: 28px;
     --checkbox-background-checked: #FF00B8;
 }
+
+ion-content {
+    --background: black;
+  }
   
 ion-checkbox::part(container) {
     border-radius: 6px;
