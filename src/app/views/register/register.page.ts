@@ -72,6 +72,7 @@ export class RegisterPage {
     onClick = () => {
        if(!this.isValidEmail || !this.isValidPassword || !this.isValidUsername) return;
        
+       console.log('Pas')
        if(this.isArtist){
             const user = {
                 username: this.usernameValue,
@@ -80,12 +81,15 @@ export class RegisterPage {
             }
             this.dataService.setData(user);
             this.router.navigate(['/create-artist'])
+            return;
        }
 
        //Si todo fue se manda el mensaje de registro exitoso
        //Luego se redirije al login para que ingrese sus datos
+
        this.#showMessageBar('User logueado', 0);
        this.router.navigate(['/tabs'])
+       return;
     }
 
 

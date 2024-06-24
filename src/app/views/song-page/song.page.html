@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button ></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{currentSong.title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="song-container">
+        <img [src]="'https://i.scdn.co/image/ab67616d00001e0257e9af9d4640f332880ffa5e'" alt="Portada de la canción">
+        <div class="song-info">
+          <h2>{{currentSong.title}}</h2>
+          <p>{{currentSong.artist}}</p>
+        </div>
+        <div class="player-controls">
+            
+            <button (click)="playPrevious()">
+                <ion-icon name="play-back-circle-outline"></ion-icon>
+            </button>
+            
+            <button (click)="togglePlayPause()">
+                <ion-icon *ngIf="isPlaying; else playIcon" name="pause-circle-outline"></ion-icon>
+                <ng-template #playIcon>
+                  <ion-icon name="play-circle-outline"></ion-icon>
+                </ng-template>
+              </button>
+    
+            <button (click)="playNext()">
+                <ion-icon  name="play-forward-circle-outline"></ion-icon>
+            </button>
+        </div>
+        <div class="progress-container">
+            <progress [value]="currentProgress" max="1"></progress>
+        </div>
+    </div>
+</ion-content>
