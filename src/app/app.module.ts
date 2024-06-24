@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { MiniPlayerComponent } from './components/song-component/song.component';
 
 
 
@@ -15,7 +16,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     BrowserModule, 
     IonicModule.forRoot(),
      IonicStorageModule.forRoot(),
-     AppRoutingModule],
+     AppRoutingModule,
+      MiniPlayerComponent
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

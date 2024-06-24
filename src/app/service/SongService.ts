@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Song } from '../interfaces/song';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongService {
-  private song: Song = {};
-  private songs: Array<Song> = []; 
+  private song = new BehaviorSubject<Song>({} as Song);
+  private songs: Array<Song> = [];
 
-  constructor() { }
+  constructor() {}
 
   setSong(song: Song) {
-    this.song = song;
+    this.song.next(song);
   }
 
   getSong() {
-    return this.song;
+    return this.song.asObservable();
   }
 
-  setSongs (songs: Array<Song>){
-    this.songs = songs
+  setSongs(songs: Array<Song>) {
+    this.songs = songs;
   }
 
-  getSongs(){
+  getSongs() {
     return this.songs;
   }
 

@@ -9,4 +9,11 @@ export class HomePage {
 
   constructor() {}
 
+  artists: string[] = [
+    'Uldren Gedde',
+    'Mora',
+    'Saiko',
+    'Erika Tourt'
+  ]
+
 }

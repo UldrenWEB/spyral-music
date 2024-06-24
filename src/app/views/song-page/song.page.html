@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="fixed-color-header">
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-back-button ></ion-back-button>
@@ -8,10 +8,12 @@
 </ion-header>
 <ion-content>
     <div class="song-container">
-        <img [src]="'https://i.scdn.co/image/ab67616d00001e0257e9af9d4640f332880ffa5e'" alt="Portada de la canción">
+      <div class="image-container">
+        <img [src]="currentSong.image" alt="Portada de la canción">
+      </div>
         <div class="song-info">
           <h2>{{currentSong.title}}</h2>
-          <p>{{currentSong.artist}}</p>
+          <p>{{formattedArtist()}}</p>
         </div>
         <div class="player-controls">
             
@@ -31,7 +33,18 @@
             </button>
         </div>
         <div class="progress-container">
-            <progress [value]="currentProgress" max="1"></progress>
-        </div>
+          <ion-range
+            min="0"
+            [max]="!duration ? 0 : duration"
+            [value]="currentProgress"
+            (ionChange)="onRangeChange($event)"
+            (ionInput)="onRangeInput($event)">
+          </ion-range>
+        
+          <div class="container-duration">
+            <span>{{ convertirSegundosAFormatoMinutos(currentProgress) }}</span>
+            <span>{{ convertirSegundosAFormatoMinutos(duration) }}</span>
+          </div>
+        </div>        
     </div>
 </ion-content>

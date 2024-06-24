@@ -1,6 +1,6 @@
 export interface Song {
     title?: string;
-    artist?: string;
+    artists?: string[];
     image?: string;
     song?: string;
 }

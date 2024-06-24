@@ -5,7 +5,7 @@
         </ion-thumbnail>
         <ion-label class="ion-text-wrap">
         <h2>{{title}}</h2>
-        <p>{{artist}}</p>
+        <p>{{formateddArtist()}}</p>
         </ion-label>
         <ion-buttons slot="end">
         <ion-button (click)="presentOptions($event)">
