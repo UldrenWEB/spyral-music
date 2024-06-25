@@ -1,5 +1,20 @@
+<!-- Iterar esta card para la musica con la infor de la musica y en artists un arreglo de los nombre -->
 <app-card-component
   imageSrc="https://ionicframework.com/docs/img/demos/thumbnail.svg"
   [artists]="artists"
   title="Stay (With SteveAoki)"
 ></app-card-component>
+
+<!-- Este es otro card para el home y los albums -->
+ <div>
+   <h2>Top Albums</h2>
+   <div style="overflow-x: scroll; display: flex; flex-direction: row; gap: 0.2em; width: 100%;"> 
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+      <app-album-component></app-album-component>
+   </div>
+ </div>

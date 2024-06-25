@@ -17,22 +17,18 @@ export class AppComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      // Actualizar la visibilidad basada en la ruta
       if (event.url.includes('/play-song')) {
-        this.isMiniPlayerVisible = false; // Ocultar el mini reproductor solo en la ruta /play-song
+        this.isMiniPlayerVisible = false;
       } else if (songHasBeenPlayed) {
-        this.isMiniPlayerVisible = true; // Mostrar el mini reproductor en otras rutas si una canción ha sido reproducida
+        this.isMiniPlayerVisible = true;
       }
-      // No es necesario cambiar la visibilidad en el "else" porque ya se maneja con la suscripción a playerService.hasPlayed$
     });
   
     this.playerService.hasPlayed$.subscribe(hasPlayed => {
-      songHasBeenPlayed = hasPlayed; // Actualizar el estado de reproducción
-      // Si una canción se está reproduciendo, asegurarse de que el mini reproductor sea visible
+      songHasBeenPlayed = hasPlayed;
       if (hasPlayed) {
         this.isMiniPlayerVisible = true;
       } else {
-        // Si no hay canciones reproduciéndose, ocultar el mini reproductor
         this.isMiniPlayerVisible = false;
       }
     });

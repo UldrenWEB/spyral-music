@@ -11,10 +11,10 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  right: 0; /* Añadir esta línea */
+  right: 0;
   width: 95%;
-  margin-left: auto; /* Añadir esta línea */
-  margin-right: auto; /* Añadir esta línea */
+  margin-left: auto;
+  margin-right: auto;
   background-color: black;
   color: white;
   gap: 0.5em;
@@ -30,12 +30,6 @@
   z-index: 999;
 }
 
-// .song-info{
-//   display: flex;
-//   justify-content: center;
-//   flex-direction: column;
-//   align-items: start;
-// }
 
 .song-info h3 {
   color: white;

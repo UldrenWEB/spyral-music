@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { CardComponent } from 'src/app/components/card-component/card.component';
+import { AlbumComponent } from 'src/app/components/album-component/album.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { CardComponent } from 'src/app/components/card-component/card.component'
     CommonModule,
     FormsModule,
     HomePageRoutingModule,
-    CardComponent
+    CardComponent,
+    AlbumComponent
   ],
   declarations: [HomePage]
 })

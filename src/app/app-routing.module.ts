@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./views/song-page/song.module').then(m=>m.SongPageModule)
   },
   {
+    path: 'view-album',
+    loadChildren: () => import('./views/album-page/album.module').then(m=>m.AlbumPageModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./views/tabs/tabs.module').then(m => m.TabsPageModule)
   }
