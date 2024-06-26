@@ -14,10 +14,12 @@ import { DataService } from "src/app/service/DataService";
 export class ProfilePage implements OnInit{
     constructor(private router: Router, private dataService: DataService, private platform: Platform, private authService: AuthService){}
     
+    userRol: number = 0;
 
     //Cargar aqui tambien lo de los generos del sujeto para cargar los seleccionados
     ngOnInit(): void {
-        this.setupKeyboardListener();
+      this.setupKeyboardListener();
+      this.userRol = this.authService.getUserRole();
     }
 
     setupKeyboardListener() {
