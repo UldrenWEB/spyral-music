@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
   })
   export class AuthService {
-    private userRole: number = 1;
+    private userRole: number = 2;
 
 
     getUserRole(): number {

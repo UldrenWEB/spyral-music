@@ -10,7 +10,6 @@ export class SearchPage {
   
   searchTxt: string = '';
   selectedChange: string = 'song';
-  isLoading: boolean = false;
   private searchTimeout: any = null;
 
   constructor(private loaderController: LoadingController) {}
@@ -30,9 +29,23 @@ export class SearchPage {
   }
 
   //Este busca luego de que el usuario escribio
+  //Meter MessageBar para la informacion del ingreso de datos
   async performSearch() {
+    if(this.searchTxt){
+      console.log('El buscador esta vacio');
+    }
 
-    this.isLoading = true;
+    if(this.selectedChange === 'duration'){
+      const duration = parseFloat(this.searchTxt);
+
+      if(isNaN(duration)){
+        console.log('Debes ingresar un numero valido')
+        return; 
+      }
+
+    }
+
+
     const loading = await this.loaderController.create({
       message: 'Buscando...',
       spinner: 'circular'
@@ -41,9 +54,10 @@ export class SearchPage {
     await loading.present();
 
     setTimeout(async () => {
-      this.isLoading = false;
       await loading.dismiss();
     }, 3000)
+
+
     console.log('Buscando:', this.searchTxt);
     console.log('Por: ', this.selectedChange);
   }

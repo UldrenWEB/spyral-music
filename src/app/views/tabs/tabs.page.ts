@@ -10,7 +10,7 @@ export class TabsPage implements OnInit {
 
   constructor(private authService: AuthService) {}
 
-  userRol: number = 1;
+  userRol: number = 2;
   
   ngOnInit(): void {
     this.userRol = this.authService.getUserRole();

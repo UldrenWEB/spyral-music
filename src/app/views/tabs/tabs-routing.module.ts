@@ -14,7 +14,6 @@ const routes: Routes = [
       {
         path: 'search',
         loadChildren: () => import('../search/search.module').then(m=>m.SearchPageModule)
-        // loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
       },
       {
         path: 'categories',
@@ -23,6 +22,10 @@ const routes: Routes = [
       {
         path: 'upload',
         loadChildren: () => import('../upload/upload.module').then(m=>m.UploadPageModule)
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m=>m.ProfilePageModule)
       },
       {
         path: '',
