@@ -4,6 +4,7 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .cont-logo{
@@ -11,13 +12,13 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5em;
-    margin-top: 3em;
+    margin-top: 2em;
 }
 
 .cont-title{
     padding: 1em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0em;
+    margin-bottom: 0em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +27,7 @@
 
 .txt-title{
     font-family: $font-primary;
-    font-size: 30px;
+    font-size: 25px;
     display: block;
     text-align: center;
 }
@@ -54,12 +55,11 @@
 
 .cont-btn {
     width: 100%;
-    margin-top: 7em;
     height: 20%;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 1.5em;
+    gap: 1em;
     align-items: center;
 }
 
@@ -87,6 +87,41 @@
 
 .btn-register:active, .btn-cancel:active {
     opacity: 0.4;
+}
+
+.cont-image-picker{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.image-picker{
+    width: 13em;
+    height: 13em;
+    padding: 0.5em;
+    border: 3px dashed $color-primary;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:active{
+        opacity: 0.2;
+    }
+}
+
+img{
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+h2{
+    text-align: center;
+    font-family: $font-new;
 }
 
 ion-select{

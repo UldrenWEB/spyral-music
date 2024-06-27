@@ -6,7 +6,6 @@
     
     <div class="cont-title">
         <span class="txt-title">Welcome, your future is bright in Spyral.</span>
-        <span class="txt-description">Enter your artist information!</span>
     </div>
 
     <div class="cont-input">
@@ -39,6 +38,13 @@
                 {{ genre.description }}
                 </ion-select-option>
             </ion-select>
+        </div>
+    </div>
+
+    <div class="cont-image-picker">
+        <div (click)="openImagePicker()" class="image-picker">
+            <h2 *ngIf="!selectImage">Select your artist image</h2>
+            <img *ngIf="selectImage" [src]="srcImage" alt="Artist Image">
         </div>
     </div>
 
