@@ -19,4 +19,6 @@ import { MessageBarComponent } from 'src/app/components/message-bar/message-bar.
   ],
   declarations: [UploadPage]
 })
-export class UploadPageModule {}
+export class UploadPageModule {
+
+}
