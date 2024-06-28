@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5em;
-    margin-top: 2em;
+    margin-top: 1em;
 }
 
 .cont-title{
@@ -27,7 +27,7 @@
 
 .txt-title{
     font-family: $font-primary;
-    font-size: 25px;
+    font-size: 20px;
     display: block;
     text-align: center;
 }
@@ -40,7 +40,7 @@
 
 .cont-select{
     padding: 0em 1.35em;
-    margin-top: 1em;
+    margin-top: 0.5em;
 }
 
 .txtLogo{
@@ -94,12 +94,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2em;
+    margin-top: 1em;
 }
 
 .image-picker{
-    width: 13em;
-    height: 13em;
+    width: 11em;
+    height: 11em;
     padding: 0.5em;
     border: 3px dashed $color-primary;
     border-radius: 20px;
