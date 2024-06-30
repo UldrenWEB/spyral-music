@@ -215,52 +215,37 @@ export class UploadPage implements OnInit {
 
     
 
-      checkPermissions() {
+      async checkPermissions() {
         if (this.platform.is('android')) {
-          this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-            result => {
-              if (!result.hasPermission) {
-                console.log('No tiene permisos de lectura')
-                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
-              }else{
-                console.log('Tiene permisos de lectura')
-              }
-            },
-            err => {
-                console.log('Ocurrio un error al pedir los permisos de lecturas')
-              this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
+          try {
+            const readPerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
+            if (!readPerm.hasPermission) {
+              await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
             }
-          );
-          
-          this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-            result => {
-              if (!result.hasPermission) {
-                console.log('No tiene los permisos de escritura')
-                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
-              }else{
-                console.log('Tiene permisos de escritura')
-              }
-            },
-            err => {
-                console.log('Ocurrio un error al pedir los permisos de escritura')
-              this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+    
+            const writePerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+            if (!writePerm.hasPermission) {
+              await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
             }
-          );
-      
-          this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE).then(
-            result => {
-              if (!result.hasPermission) {
-                console.log('No tiene permisos de managed')
-                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE);
-              }else{
-                console.log('Tiene permisos de managed')
-              }
-            },
-            err => {
-                console.log('Ocurrio un error al pedir los permisos managed')
-              this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE);
+    
+            const managePerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE);
+            if (!managePerm.hasPermission) {
+              await this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE);
             }
-          );
+    
+            // Verificación final después de solicitar los permisos
+            const finalReadPerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE);
+            const finalWritePerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE);
+            const finalManagePerm = await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.MANAGE_EXTERNAL_STORAGE);
+    
+            if (finalReadPerm.hasPermission && finalWritePerm.hasPermission && finalManagePerm.hasPermission) {
+              console.log('Todos los permisos han sido concedidos');
+            } else {
+              console.log('No se han concedido todos los permisos necesarios');
+            }
+          } catch (error) {
+            console.error('Error al solicitar permisos: ', error);
+          }
         }
       }
 
