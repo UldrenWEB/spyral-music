@@ -3,11 +3,15 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
 import {FilePath} from '@awesome-cordova-plugins/file-path/ngx'
 import { FileChooser } from '@awesome-cordova-plugins/file-chooser/ngx';
 import { ImagePicker, ImagePickerOptions } from "@awesome-cordova-plugins/image-picker/ngx";
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { WebView } from "@awesome-cordova-plugins/ionic-webview/ngx";
 import { Platform } from "@ionic/angular";
 import {FileSelector} from 'capacitor-file-selector'
 import { Capacitor } from "@capacitor/core";
 import {AndroidPermissions} from '@awesome-cordova-plugins/android-permissions/ngx';
+
+import { FileService } from "src/app/service/FileService";
 
 @Component({
   selector: 'app-upload',
@@ -20,7 +24,7 @@ export class UploadPage implements OnInit {
     selectImage: boolean = false;
     selectAudio: boolean = false;
     nameAudio: string = '';
-    srcImage: string = '';
+    srcImage: SafeResourceUrl | undefined;;
     selectedGenres: string[] = [];
     showAlert: boolean = false;
     alertMessage: string = '';
@@ -44,6 +48,8 @@ export class UploadPage implements OnInit {
     private platform: Platform,
     private imagePicker: ImagePicker,
     private webView: WebView,
+    private sanitizer: DomSanitizer,
+    private fileService: FileService
   ) { }
 
 
@@ -134,84 +140,98 @@ export class UploadPage implements OnInit {
     //     });
     // }
     
-   selectFile() {
+  //  selectFile() {
 
-    this.fileChooser.open()
-        .then(uri => {
-            console.log('Archivo seleccionado:', uri);
-            this.getFileName(uri);
-        })
-        .catch(error => console.log(`Hubo un error al intentar seleccionar un audio. ${error}`))
-    }
+  //   this.fileChooser.open()
+  //       .then(uri => {
+  //           console.log('Archivo seleccionado:', uri);
+  //           this.getFileName(uri);
+  //       })
+  //       .catch(error => console.log(`Hubo un error al intentar seleccionar un audio. ${error}`))
+  //   }
 
 
-    getFileName(filePath: string) {
-        console.log('Iniciando getFileName con filePath:', filePath);
+  //   getFileName(filePath: string) {
+  //       console.log('Iniciando getFileName con filePath:', filePath);
       
-        this.filePath.resolveNativePath(filePath).then((nativeFilePath) => {
-          console.log('Ruta nativa del archivo:', nativeFilePath);
+  //       this.filePath.resolveNativePath(filePath).then((nativeFilePath) => {
+  //         console.log('Ruta nativa del archivo:', nativeFilePath);
       
-          this.file.resolveLocalFilesystemUrl(nativeFilePath).then(fileEntry => {
-            console.log('Archivo resuelto:', fileEntry);
+  //         this.file.resolveLocalFilesystemUrl(nativeFilePath).then(fileEntry => {
+  //           console.log('Archivo resuelto:', fileEntry);
       
-            fileEntry.getMetadata(metadata => {
-              console.log('Metadata del archivo obtenida:', metadata);
-              console.log('Nombre del archivo:', fileEntry.name);
-              this.convertFileToBlob(nativeFilePath, fileEntry.name);
-            }, error => {
-              console.log('Error al obtener metadata del archivo:', JSON.stringify(error));
-            });
+  //           fileEntry.getMetadata(metadata => {
+  //             console.log('Metadata del archivo obtenida:', metadata);
+  //             console.log('Nombre del archivo:', fileEntry.name);
+  //             this.convertFileToBlob(nativeFilePath, fileEntry.name);
+  //           }, error => {
+  //             console.log('Error al obtener metadata del archivo:', JSON.stringify(error));
+  //           });
       
-          }).catch(error => {
-            console.log('Hubo un error al resolver la URL del archivo:', JSON.stringify(error));
-          });
+  //         }).catch(error => {
+  //           console.log('Hubo un error al resolver la URL del archivo:', JSON.stringify(error));
+  //         });
       
-        }).catch(error => {
-          console.log('Hubo un error al resolver la ruta nativa del archivo:', JSON.stringify(error));
-        });
-      }
+  //       }).catch(error => {
+  //         console.log('Hubo un error al resolver la ruta nativa del archivo:', JSON.stringify(error));
+  //       });
+  //     }
       
 
-      convertFileToBlob(filePath: string, fileName: string) {
-        this.file.resolveLocalFilesystemUrl(filePath).then(fileEntry => {
-          (fileEntry as any).file((file: any) => {
-            console.log('Se empezó a leer el archivo');
-            console.log('Tipo de archivo:', file.type);
+  //     convertFileToBlob(filePath: string, fileName: string) {
+  //       this.file.resolveLocalFilesystemUrl(filePath).then(fileEntry => {
+  //         (fileEntry as any).file((file: any) => {
+  //           console.log('Se empezó a leer el archivo');
+  //           console.log('Tipo de archivo:', file.type);
             
-            // Depuración: Mostrar la ruta y el nombre del archivo
-            console.log('Ruta del archivo:', filePath);
-            console.log('Nombre del archivo:', fileName);
+  //           // Depuración: Mostrar la ruta y el nombre del archivo
+  //           console.log('Ruta del archivo:', filePath);
+  //           console.log('Nombre del archivo:', fileName);
       
-            // Leer el archivo como ArrayBuffer usando el plugin File
-            const directoryPath = filePath.substring(0, filePath.lastIndexOf('/'));
-            const fileOnlyName = filePath.substring(filePath.lastIndexOf('/') + 1);
+  //           // Leer el archivo como ArrayBuffer usando el plugin File
+  //           const directoryPath = filePath.substring(0, filePath.lastIndexOf('/'));
+  //           const fileOnlyName = filePath.substring(filePath.lastIndexOf('/') + 1);
       
-            this.file.readAsArrayBuffer(directoryPath, fileOnlyName)
-              .then((arrayBuffer: ArrayBuffer) => {
-                const blob = new Blob([arrayBuffer], { type: file.type });
-                this.uploadFile(blob, fileName);
-                this.nameAudio = 'Se ha seleccionado correctamente el archivo';
-              })
-              .catch(error => {
-                console.log('Error al leer el archivo como ArrayBuffer:', JSON.stringify(error));
-              });
+  //           this.file.readAsArrayBuffer(directoryPath, fileOnlyName)
+  //             .then((arrayBuffer: ArrayBuffer) => {
+  //               const blob = new Blob([arrayBuffer], { type: file.type });
+  //               this.uploadFile(blob, fileName);
+  //               this.nameAudio = 'Se ha seleccionado correctamente el archivo';
+  //             })
+  //             .catch(error => {
+  //               console.log('Error al leer el archivo como ArrayBuffer:', JSON.stringify(error));
+  //             });
       
-          }, (error: any) => {
-            console.log('Error al obtener el archivo:', JSON.stringify(error));
-          });
-        }).catch(error => console.log(`Hubo un error al resolver la URL del archivo ${JSON.stringify(error)}`));
-      }
+  //         }, (error: any) => {
+  //           console.log('Error al obtener el archivo:', JSON.stringify(error));
+  //         });
+  //       }).catch(error => console.log(`Hubo un error al resolver la URL del archivo ${JSON.stringify(error)}`));
+  //     }
       
       
       
 
-      uploadFile(blob: Blob, fileName: string) {
-        const formData = new FormData();
-        formData.append('file', blob, fileName);
+  //     uploadFile(blob: Blob, fileName: string) {
+  //       const formData = new FormData();
+  //       formData.append('file', blob, fileName);
     
-        // Aquí puedes implementar la lógica para subir el archivo
-        console.log('Se subió el archivo correctamente:', fileName);
-      }
+  //       // Aquí puedes implementar la lógica para subir el archivo
+  //       console.log('Se subió el archivo correctamente:', fileName);
+  //     }
+
+  async selectFile(){
+    const { blob, filename } = await this.fileService.selectAudioFile();
+
+    if (blob && filename) {
+      const formData = new FormData();
+      formData.append('audioFile', blob, filename);
+
+      // Aquí puedes enviar formData al servidor usando HttpClient o tu método preferido
+      console.log('Archivo seleccionado y listo para enviar:', formData);
+    } else {
+      console.log('No se seleccionó ningún archivo de audio.');
+    }
+  }
 
     
 
@@ -251,26 +271,25 @@ export class UploadPage implements OnInit {
 
 
       //Metodo para abrir imagen
-      async openImagePicker() {  
+      async openImagePicker() {
         try {
-            this.checkPermissions();
-            const options: ImagePickerOptions = {
-                maximumImagesCount: 1,
-            };
-            
-            const photos = await this.imagePicker.getPictures(options);
+          const image: Photo = await Camera.getPhoto({
+            quality: 90,
+            allowEditing: false,
+            resultType: CameraResultType.Uri, // Obtiene la URI de la imagen
+            source: CameraSource.Photos // Fuente de las fotos, puedes cambiar a CameraSource.Camera para abrir la cámara directamente
+          });
     
-            if (photos && photos.length > 0) {
-                const srcImage = this.webView.convertFileSrc(photos[0]);
-                this.selectImage = true;
-                this.srcImage = srcImage;
-                console.log('Imagen seleccionada:', srcImage);
-            } else {
-                console.log('El resultado de las fotos es vacio');
-            }
+          if (image && image.webPath) {
+            this.srcImage = this.sanitizer.bypassSecurityTrustResourceUrl(image.webPath);
+            this.selectImage = true;
+            console.log('Imagen seleccionada: ', this.srcImage);
+          } else {
+            console.log('El resultado de las fotos es vacío');
+          }
         } catch (error) {
-            console.log('Error al abrir el selector de imágenes:', error);
+          console.error('Error seleccionando la imagen: ', error);
         }
-    }
+      }
     
 }
